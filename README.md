@@ -5,3 +5,4 @@ brew services stop redis
 redis-cli
 KEYS * 
  FLUSHDB 
+exit

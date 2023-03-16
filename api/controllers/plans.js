@@ -79,7 +79,7 @@ module.exports = {
                 const del = await db.deletePlanById(req.params.id)
                 if(del == true){
                     res.setHeader("ETag",payload.eTag);
-                    return res.status(201).json({"msg":"Plan Deleted"});
+                    return res.status(204).json({"msg":"Plan Deleted"});
                 } else{
                     return res.status(500).json({"msg":"Plan Could not be deleted"});
                 }
