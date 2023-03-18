@@ -77,7 +77,7 @@ module.exports = {
                 console.log(req.body);
                 const payload = await db.getPlanById(req.body.objectId)
                 if (payload){
-                    return res.status(403).json({
+                    return res.status(409).json({
                         "msg":"plan already exists"
                     })
                 }
@@ -181,15 +181,15 @@ module.exports = {
 
                     }
                 } else{
-                    
+                    console.log("check 14")
+                return res.status(404).json({
+                    "msg" : "Plan not found"
+                })
                     
                 }
 
            
-                console.log("check 14")
-                return res.status(404).json({
-                    "msg" : "Plan not found"
-                })
+                
            
             
         } catch (error) {
