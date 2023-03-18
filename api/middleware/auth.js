@@ -13,8 +13,11 @@ module.exports = {
 
         return jwtToken
     },
-    validateToken : (token)=> {
+    validateToken : (req)=> {
         try {
+
+            //var token = req.header("x-auth-token");
+            var token = req.headers.authorization.split(" ")[1];
 
             console.log("check 1")
             

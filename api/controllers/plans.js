@@ -11,11 +11,20 @@ module.exports = {
 
     getPlanById : async(req,res) => {
         try {
-            var token = req.header("x-auth-token");
-            if(!token){
-                return res.status(401).json({msg : 'No token, authorization denied'});
-           }
-            result = validateToken(token);
+            if (
+                req.params.id == null &&
+                req.params.id == "" &&
+                req.params == {}
+              ) {
+                res.status(400).json({ message: "invalid plan ID" });
+                console.log("invalid plan ID");
+                return;
+              }
+        //     var token = req.header("x-auth-token");
+        //     if(!token){
+        //         return res.status(401).json({msg : 'No token, authorization denied'});
+        //    }
+            result = validateToken(req);
             if (!result) {
                 return res.status(400).json({"msg":"token invalidate"});
             } 
@@ -55,13 +64,13 @@ module.exports = {
     },
     savePlan : async(req,res) => {
         try {
-            var token = req.header("x-auth-token");
-            if(!token){
-                return res.status(401).json({msg : 'No token, authorization denied'});
-           }
-            result = validateToken(token);
+            
+        //     if(!token){
+        //         return res.status(401).json({msg : 'No token, authorization denied'});
+        //    }
+            result = validateToken(req);
             if (!result) {
-                return res.status(400).json({"msg":"token invalidate"});
+                return res.status(400).json({"msg":"token invalid"});
             } 
             if (payloadValidation(req)) {
                 
@@ -90,11 +99,20 @@ module.exports = {
     },
     deletePlanById : async (req,res) => {
         try {
-            var token = req.header("x-auth-token");
-            if(!token){
-                return res.status(401).json({msg : 'No token, authorization denied'});
-           }
-            result = validateToken(token);
+            if (
+                req.params.id == null &&
+                req.params.id == "" &&
+                req.params == {}
+              ) {
+                res.status(400).json({ message: "invalid plan ID" });
+                console.log("invalid plan ID");
+                return;
+              }
+        //     // var token = req.header("x-auth-token");
+        //     // if(!token){
+        //     //     return res.status(401).json({msg : 'No token, authorization denied'});
+        //    }
+            result = validateToken(req);
             if (!result) {
                 return res.status(400).json({"msg":"token invalidate"});
             } 
@@ -123,13 +141,22 @@ module.exports = {
     },
     updatePlan : async (req,res) => {
         try {
+            if (
+                req.params.id == null &&
+                req.params.id == "" &&
+                req.params == {}
+              ) {
+                res.status(400).json({ message: "invalid plan ID" });
+                console.log("invalid plan ID");
+                return;
+              }
             console.log("line 123")
-            var token = req.header("x-auth-token");
-            if(!token){
-                return res.status(401).json({msg : 'No token, authorization denied'});
-           }
-            console.log("line 128")
-            result = validateToken(token);
+        //     var token = req.header("x-auth-token");
+        //     if(!token){
+        //         return res.status(401).json({msg : 'No token, authorization denied'});
+        //    }
+        //     console.log("line 128")
+            result = validateToken(req);
             console.log("check 1",result);
             if (!result) {
                 console.log("check 2");
@@ -142,7 +169,7 @@ module.exports = {
                 if (payload){
                     console.log("check 7")
                     const eTag = payload.eTag;
-                    if((req.headers['if-match'] || eTag == req.headers['if-match']) || eTag == hash(req.body)){ //etag(JSON.stringify(req.body))
+                    if((!req.headers['if-match'] || eTag != req.headers['if-match']) || eTag == etag(JSON.stringify(req.body))){ //hash(req.body)
                         console.log("check 7")
                         return res.setHeader("ETag", eTag).status(412).json(JSON.parse(payload.plan));
                     } else {

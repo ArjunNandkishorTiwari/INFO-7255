@@ -24,8 +24,8 @@ db.connectionDB =  async() => {
 
 db.saveNewPlan = async (req) => {
     console.log("check 9")
-    //const eTag = etag(JSON.stringify(req.body));
-    const eTag = hash(req.body);
+    const eTag = etag(JSON.stringify(req.body));
+    //const eTag = hash(req.body);
     console.log("check 10")
     await client.hSet(req.body.objectId, "plan", JSON.stringify(req.body));
     console.log("check 10.1")

@@ -24,11 +24,11 @@ module.exports = {
 
     validateTokens : (req,res) => {
         try {
-            var token = req.header("x-auth-token");
-            if(!token){
-                return res.status(401).json({msg : 'No token, authorization denied'});
-           }
-            result = validateToken(token);
+        //     var token = req.header("x-auth-token");
+        //     if(!token){
+        //         return res.status(401).json({msg : 'No token, authorization denied'});
+        //    }
+            result = validateToken(req);
             if (result) {
                 return res.status(200).json({"msg":"token validate"});
             } else {
